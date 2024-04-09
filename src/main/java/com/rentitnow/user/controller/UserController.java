@@ -1,7 +1,7 @@
 package com.rentitnow.user.controller;
 
 import com.rentitnow.user.domain.User;
-import com.rentitnow.user.domain.UserDTO;
+import com.rentitnow.user.domain.UserDto;
 import com.rentitnow.user.mapper.UserMapper;
 import com.rentitnow.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -22,26 +22,26 @@ public class UserController {
     private final UserMapper userMapper;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> createUser(@RequestBody UserDTO userDTO) {
-        User user = userMapper.mapToUser(userDTO);
+    public ResponseEntity<Void> createUser(@RequestBody UserDto userDto) {
+        User user = userMapper.mapToUser(userDto);
         userService.createUser(user);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping(value = "{userId}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable UUID userId) throws UserNotFoundException {
+    public ResponseEntity<UserDto> getUser(@PathVariable UUID userId) throws UserNotFoundException {
         return ResponseEntity.ok(userMapper.mapToUserDTO(userService.getUser(userId)));
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDTO>> getUsers() {
+    public ResponseEntity<List<UserDto>> getUsers() {
         List<User> customersList = userService.getAllUsers();
         return ResponseEntity.ok(userMapper.mapToUserDTOList(customersList));
     }
 
     @PutMapping
-    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
-        User user = userMapper.mapToUser(userDTO);
+    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto) {
+        User user = userMapper.mapToUser(userDto);
         User savedUser = userService.createUser(user);
         return ResponseEntity.ok(userMapper.mapToUserDTO(savedUser));
     }

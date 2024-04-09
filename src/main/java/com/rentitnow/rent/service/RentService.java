@@ -6,7 +6,6 @@ import com.rentitnow.rent.repository.RentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -15,7 +14,7 @@ public class RentService {
 
     private RentRepository rentRepository;
 
-    public Rent addRent(final Rent rent) {
+    public Rent rentMovie(final Rent rent) {
         return rentRepository.save(rent);
     }
 

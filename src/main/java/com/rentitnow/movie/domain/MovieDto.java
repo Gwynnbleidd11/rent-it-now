@@ -1,11 +1,14 @@
 package com.rentitnow.movie.domain;
 
+import lombok.Builder;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
-public record MovieDTO(
-        UUID id,
+@Builder
+public record MovieDto(
+        UUID movieId,
         String title,
         String director,
         String cast,

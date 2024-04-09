@@ -3,7 +3,7 @@ package com.rentitnow.user.domain;
 import java.time.LocalDate;
 import java.util.UUID;
 
-public record UserDTO(
+public record UserDto(
         UUID id,
         String email,
         String password,

@@ -1,5 +1,7 @@
 package com.rentitnow.user.domain;
 
+import com.rentitnow.cart.domain.Cart;
+import com.rentitnow.movie.domain.Movie;
 import com.rentitnow.rent.domain.Rent;
 import com.sun.istack.NotNull;
 import lombok.*;
@@ -29,6 +31,9 @@ public class User {
     private String phoneNumber;
     private LocalDate birthDate;
     private LocalDate creationDate;
+    @OneToOne
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
     @OneToMany(
             targetEntity = Rent.class,
             mappedBy = "user",
