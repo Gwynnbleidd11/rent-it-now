@@ -2,22 +2,25 @@ package com.rentitnow.user.mapper;
 
 import com.rentitnow.user.domain.User;
 import com.rentitnow.user.domain.UserDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserMapper {
 
     public User mapToUser(final UserDto userDTO) {
         return User.builder()
-                .userId(userDTO.id())
+                .userId(userDTO.userId())
                 .email(userDTO.email())
                 .password(userDTO.password())
                 .firstname(userDTO.firstname())
                 .lastname(userDTO.lastname())
                 .birthDate(userDTO.birthDate())
                 .creationDate(userDTO.creationDate())
+                .phoneNumber(userDTO.phoneNumber())
                 .build();
     }
 

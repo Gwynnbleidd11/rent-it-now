@@ -20,8 +20,8 @@ import java.util.UUID;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
     @NotNull
     private String email;
     @NotNull
@@ -31,9 +31,6 @@ public class User {
     private String phoneNumber;
     private LocalDate birthDate;
     private LocalDate creationDate;
-    @OneToOne
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
     @OneToMany(
             targetEntity = Rent.class,
             mappedBy = "user",

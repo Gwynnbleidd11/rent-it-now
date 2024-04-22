@@ -1,5 +1,9 @@
 package com.rentitnow.user.controller;
 
+import com.rentitnow.cart.controller.CartNotFountException;
+import com.rentitnow.cart.domain.Cart;
+import com.rentitnow.cart.mapper.CartMapper;
+import com.rentitnow.cart.service.CartService;
 import com.rentitnow.user.domain.User;
 import com.rentitnow.user.domain.UserDto;
 import com.rentitnow.user.mapper.UserMapper;
@@ -9,8 +13,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
@@ -20,16 +24,21 @@ public class UserController {
 
     private final UserService userService;
     private final UserMapper userMapper;
+    private final CartService cartService;
+    private final CartMapper cartMapper;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> createUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<Void> createUser(@RequestBody UserDto userDto) throws UserNotFoundException {
         User user = userMapper.mapToUser(userDto);
+        user.setCreationDate(LocalDate.now());
         userService.createUser(user);
+        Cart cart = cartMapper.mapToNewCart(user.getUserId());
+        cartService.saveCart(cart);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping(value = "{userId}")
-    public ResponseEntity<UserDto> getUser(@PathVariable UUID userId) throws UserNotFoundException {
+    public ResponseEntity<UserDto> getUser(@PathVariable Long userId) throws UserNotFoundException {
         return ResponseEntity.ok(userMapper.mapToUserDTO(userService.getUser(userId)));
     }
 
@@ -47,7 +56,7 @@ public class UserController {
     }
 
     @DeleteMapping(value = "{userId}")
-    public ResponseEntity<Void> deleteCustomer(@PathVariable UUID userId) {
+    public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
         return ResponseEntity.noContent().build();
     }

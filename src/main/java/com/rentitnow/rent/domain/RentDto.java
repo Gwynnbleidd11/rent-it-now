@@ -5,10 +5,11 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public record RentDto(
-        UUID id,
+        Long id,
+        Long movieId,
         BigDecimal cost,
         LocalDate rentDate,
         LocalDate returnDate,
-        UUID userId
+        Long userId
 ) {
 }

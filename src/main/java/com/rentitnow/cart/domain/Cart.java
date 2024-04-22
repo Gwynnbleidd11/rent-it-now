@@ -2,12 +2,14 @@ package com.rentitnow.cart.domain;
 
 import com.rentitnow.movie.domain.Movie;
 import com.rentitnow.user.domain.User;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @Builder
@@ -17,13 +19,12 @@ import java.util.UUID;
 public class Cart {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JoinColumn(unique = true)
-    private UUID cartId;
-    private BigDecimal value;
-    @OneToOne
+    private Long cartId;
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "carts")
-    private List<Movie> movies;
+    private List<Movie> movies = new ArrayList<>();
 }

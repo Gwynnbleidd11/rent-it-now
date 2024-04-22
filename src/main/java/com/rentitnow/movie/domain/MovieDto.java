@@ -8,12 +8,12 @@ import java.util.UUID;
 
 @Builder
 public record MovieDto(
-        UUID movieId,
+        Long movieId,
+        String imdbMovieId,
         String title,
         String director,
         String cast,
-        LocalDate yearOfPublishing,
-        BigDecimal price,
-        UUID rentId
+        LocalDate publicationDate,
+        BigDecimal price
 ) {
 }

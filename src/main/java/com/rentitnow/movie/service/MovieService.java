@@ -7,23 +7,27 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class MovieService {
 
-    private MovieRepository movieRepository;
+    private final MovieRepository movieRepository;
 
-    public Movie addMovie(final Movie movie) {
+    public Movie saveMovie(final Movie movie) {
         return movieRepository.save(movie);
     }
 
-    public Movie getMovie(final UUID movieId) throws MovieNotFountException {
-        return movieRepository.findById(movieId).orElseThrow(MovieNotFountException::new);
+    public Movie getMovie(final Long movieId) throws MovieNotFountException {
+        System.out.println(movieId);
+        return movieRepository.findByMovieId(movieId);
     }
 
     public List<Movie> getAllMovies() {
         return movieRepository.findAll();
+    }
+
+    public void deleteMovie(final Long movieId) {
+        movieRepository.deleteById(movieId);
     }
 }

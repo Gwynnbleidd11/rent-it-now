@@ -1,19 +1,14 @@
 package com.rentitnow.transaction.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.sun.istack.NotNull;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,10 +17,15 @@ public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID transactionId;
+    @JoinColumn(unique = true)
+    private Long transactionId;
     private LocalDateTime transactionDateAndTime;
-    private UUID userId;
+    @NotNull
+    private Long userId;
+    @NotNull
     private BigDecimal transactionValue;
+    @NotNull
     private boolean isTransactionPayed;
-    private String transactionType;
+    @Enumerated(EnumType.STRING)
+    private TransactionType transactionType;
 }

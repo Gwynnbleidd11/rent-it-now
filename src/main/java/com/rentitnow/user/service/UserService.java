@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +18,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User getUser(final UUID userId) throws UserNotFoundException {
+    public User getUser(final Long userId) throws UserNotFoundException {
         return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
     }
 
@@ -27,7 +26,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public void deleteUser(final UUID userId) {
+    public void deleteUser(final Long userId) {
         userRepository.deleteById(userId);
     }
 }
