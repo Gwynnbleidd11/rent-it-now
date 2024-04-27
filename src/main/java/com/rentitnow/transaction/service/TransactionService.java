@@ -1,5 +1,8 @@
 package com.rentitnow.transaction.service;
 
+import com.rentitnow.cart.domain.Cart;
+import com.rentitnow.cart.service.CartService;
+import com.rentitnow.movie.domain.Movie;
 import com.rentitnow.transaction.controller.TransactionNotFountException;
 import com.rentitnow.transaction.domain.Transaction;
 import com.rentitnow.transaction.domain.TransactionType;
@@ -7,9 +10,10 @@ import com.rentitnow.transaction.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +32,7 @@ public class TransactionService {
     public List<Transaction> getUserTransactions(final Long userId) {
         List<Transaction> transactionsList = transactionRepository.findAll();
         transactionsList.stream()
-                .filter(u -> u.getUserId().equals(userId))
+                .filter(u -> u.getUser().getUserId().equals(userId))
                 .toList();
         return transactionsList;
     }
@@ -37,11 +41,17 @@ public class TransactionService {
         return transactionRepository.findAll();
     }
 
-    public Transaction payTransaction(final Long transactionId, TransactionType transactionType) throws TransactionNotFountException {
+    public Transaction payTransaction(final Long transactionId, final Cart cart, TransactionType transactionType) throws TransactionNotFountException {
         Transaction transaction = getTransaction(transactionId);
+        BigDecimal sum = new BigDecimal(BigInteger.ZERO);
         transaction.setTransactionPayed(true);
         transaction.setTransactionDateAndTime(LocalDateTime.now());
-        transaction.setTransactionType(TransactionType.BLIK); //tymczasowo wbite na sztywno
+        transaction.setTransactionType(transactionType);
+        for (Movie movie: cart.getMovies()) {
+            sum = sum.add(movie.getPrice());
+        }
+        transaction.setTransactionValue(sum);
+        cart.setTransaction(null);
         saveTransaction(transaction);
         return transaction;
     }

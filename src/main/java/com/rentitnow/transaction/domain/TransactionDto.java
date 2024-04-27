@@ -12,5 +12,6 @@ public record TransactionDto(
         Long userId,
         BigDecimal transactionValue,
         boolean isTransactionPayed,
-        TransactionType transactionType) {
+        TransactionType transactionType
+) {
 }

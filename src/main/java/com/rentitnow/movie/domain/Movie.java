@@ -34,7 +34,7 @@ public class Movie {
     private LocalDate publicationDate;
     @NotNull
     private BigDecimal price;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.DETACH})
     @JoinTable(
             name = "join_movie_cart",
             joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "movieId"),

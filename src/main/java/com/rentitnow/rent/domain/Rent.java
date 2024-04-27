@@ -1,6 +1,7 @@
 package com.rentitnow.rent.domain;
 
 import com.rentitnow.movie.domain.Movie;
+import com.rentitnow.transaction.domain.Transaction;
 import com.rentitnow.user.domain.User;
 import com.sun.istack.NotNull;
 import lombok.*;
@@ -34,4 +35,7 @@ public class Rent {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "transaction_id")
+    private Transaction transaction;
 }

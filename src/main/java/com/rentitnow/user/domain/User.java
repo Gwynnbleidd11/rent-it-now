@@ -1,15 +1,13 @@
 package com.rentitnow.user.domain;
 
-import com.rentitnow.cart.domain.Cart;
-import com.rentitnow.movie.domain.Movie;
 import com.rentitnow.rent.domain.Rent;
+import com.rentitnow.transaction.domain.Transaction;
 import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -37,4 +35,10 @@ public class User {
             fetch = FetchType.LAZY
     )
     private List<Rent> listOfRents;
+    @OneToMany(
+            targetEntity = Transaction.class,
+            mappedBy = "user",
+            fetch = FetchType.LAZY
+    )
+    private List<Transaction> listOfTransactions;
 }

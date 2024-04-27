@@ -8,6 +8,7 @@ import java.util.List;
 public record CartDto(
         Long cartId,
         Long userId,
+        Long transactionId,
         List<Long> movieIds
 ) {
 }

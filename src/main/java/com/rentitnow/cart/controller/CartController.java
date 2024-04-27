@@ -9,6 +9,7 @@ import com.rentitnow.movie.domain.Movie;
 import com.rentitnow.movie.domain.MovieDto;
 import com.rentitnow.movie.mapper.MovieMapper;
 import com.rentitnow.movie.service.MovieService;
+import com.rentitnow.transaction.controller.TransactionNotFountException;
 import com.rentitnow.transaction.domain.Transaction;
 import com.rentitnow.transaction.service.TransactionService;
 import com.rentitnow.user.controller.UserNotFoundException;
@@ -71,10 +72,11 @@ public class CartController {
     }
 
     @PostMapping("/transaction/{cartId}")
-    public ResponseEntity<Void> createTransactionFromCart(@PathVariable Long cartId) throws CartNotFountException {
+    public ResponseEntity<Void> createTransactionFromCart(@PathVariable Long cartId) throws CartNotFountException, UserNotFoundException, TransactionNotFountException {
         Cart cart = cartService.getCart(cartId);
-        Transaction transaction = cartService.createTransactionFromCart(cart);
-        transactionService.saveTransaction(transaction);
+        if (cart.getTransaction() == null) {
+            cartService.createTransactionFromCart(cart);
+        }
         return ResponseEntity.ok().build();
     }
 

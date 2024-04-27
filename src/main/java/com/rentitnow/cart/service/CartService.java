@@ -7,12 +7,14 @@ import com.rentitnow.movie.controller.MovieNotFountException;
 import com.rentitnow.movie.domain.Movie;
 import com.rentitnow.movie.repository.MovieRepository;
 import com.rentitnow.transaction.domain.Transaction;
+import com.rentitnow.transaction.service.TransactionService;
+import com.rentitnow.user.controller.UserNotFoundException;
+import com.rentitnow.user.domain.User;
+import com.rentitnow.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -21,6 +23,9 @@ public class CartService {
 
     private final CartRepository cartRepository;
     private final MovieRepository movieRepository;
+    private final UserService userService;
+    private final TransactionService transactionService;
+
 
     public Cart saveCart(final Cart cart) {
         return cartRepository.save(cart);
@@ -62,31 +67,29 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
-    private BigDecimal calculateRentValue(final Cart cart) {
-        BigDecimal total = BigDecimal.ZERO;
-        for (Movie movie: cart.getMovies()) {
-            total = total.add(movie.getPrice());
-        }
-        return total;
-    }
-
-    public Transaction createTransactionFromCart(final Cart cart) {
-        return Transaction.builder()
-                .userId(cart.getUser().getUserId())
-                .transactionValue(calculateRentValue(cart))
+    public Transaction createTransactionFromCart(final Cart cart) throws UserNotFoundException {
+        User user = userService.getUser(cart.getUser().getUserId());
+        Transaction transaction = Transaction.builder()
+                .user(user)
                 .isTransactionPayed(false)
                 .build();
+        Transaction transaction1 =   transactionService.saveTransaction(transaction);
+        cart.setTransaction(transaction1);
+        cartRepository.save(cart);
+        return transaction;
     }
 
-    public Cart createNewCart(final Cart cart) throws CartNotFountException {
-        Cart newCart = Cart.builder()
-            .movies(new ArrayList<>())
-            .build();
-        for (Movie movie: cart.getMovies()) {
-            deleteMovieFromCart(cart.getCartId(), movie);
-        }
-        deleteCart(cart.getCartId());
-        return newCart;
+    public void emptyCart(final Cart cart) throws CartNotFountException {
+        cart.getMovies().forEach(cart::removeMovieFromCart);
+        cartRepository.save(cart);
+//        List<Movie> moviesList = cart.getMovies();
+//        for (Movie movie: moviesList) {
+//            deleteMovieFromCart(cart.getCartId(), movie);
+//        }
+    }
+
+    public void clearTransactionFromCart(final Cart cart) {
+        cart.setTransaction(null);
     }
 
     public List<Cart> getAllCarts() {

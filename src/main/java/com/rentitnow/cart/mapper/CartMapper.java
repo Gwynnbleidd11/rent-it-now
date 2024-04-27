@@ -5,14 +5,14 @@ import com.rentitnow.cart.domain.Cart;
 import com.rentitnow.cart.domain.CartDto;
 import com.rentitnow.cart.service.CartService;
 import com.rentitnow.movie.domain.Movie;
+import com.rentitnow.transaction.controller.TransactionNotFountException;
+import com.rentitnow.transaction.domain.Transaction;
+import com.rentitnow.transaction.service.TransactionService;
 import com.rentitnow.user.controller.UserNotFoundException;
-import com.rentitnow.user.domain.User;
 import com.rentitnow.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,12 +21,15 @@ import java.util.List;
 public class CartMapper {
 
     private final CartService cartService;
-    private  final UserService userService;
+    private final UserService userService;
+    private final TransactionService transactionService;
 
-    public Cart mapToCart(final CartDto cartDto) throws CartNotFountException, UserNotFoundException {
+    public Cart mapToCart(final CartDto cartDto) throws CartNotFountException, UserNotFoundException, TransactionNotFountException {
+        Transaction transaction = transactionService.getTransaction(cartDto.transactionId());
         return Cart.builder()
                 .cartId(cartDto.cartId())
                 .user(userService.getUser(cartDto.userId()))
+                .transaction(transaction)
                 .movies(cartService.getMoviesFromCart(cartDto.cartId()))
                 .build();
     }
@@ -35,6 +38,8 @@ public class CartMapper {
         return CartDto.builder()
                 .cartId(cart.getCartId())
                 .userId(cart.getUser().getUserId())
+                .transactionId(cart.getTransaction() != null ?
+                        cart.getTransaction().getTransactionId() : null)
                 .movieIds(cart.getMovies().stream()
                         .map(Movie::getMovieId)
                         .toList())

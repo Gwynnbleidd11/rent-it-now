@@ -1,5 +1,7 @@
 package com.rentitnow.transaction.domain;
 
+import com.rentitnow.cart.domain.Cart;
+import com.rentitnow.user.domain.User;
 import com.sun.istack.NotNull;
 import lombok.*;
 
@@ -21,11 +23,13 @@ public class Transaction {
     private Long transactionId;
     private LocalDateTime transactionDateAndTime;
     @NotNull
-    private Long userId;
-    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
     private BigDecimal transactionValue;
     @NotNull
     private boolean isTransactionPayed;
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
+
 }

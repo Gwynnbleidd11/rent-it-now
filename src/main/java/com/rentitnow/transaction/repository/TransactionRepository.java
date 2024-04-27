@@ -13,8 +13,6 @@ public interface TransactionRepository extends CrudRepository<Transaction, Long>
     @Override
     Transaction save(Transaction transaction);
 
-    List<Transaction> findAllByUserIdIs(Long userId);
-
     List<Transaction> findAll();
 
     Optional<Transaction> findByTransactionId(Long transactionId);

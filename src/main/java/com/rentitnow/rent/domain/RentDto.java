@@ -2,7 +2,6 @@ package com.rentitnow.rent.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.UUID;
 
 public record RentDto(
         Long id,
@@ -10,6 +9,7 @@ public record RentDto(
         BigDecimal cost,
         LocalDate rentDate,
         LocalDate returnDate,
-        Long userId
+        Long userId,
+        Long transactionId
 ) {
 }

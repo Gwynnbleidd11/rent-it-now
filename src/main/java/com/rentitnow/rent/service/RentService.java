@@ -5,6 +5,7 @@ import com.rentitnow.movie.domain.Movie;
 import com.rentitnow.rent.controller.RentNotFoundException;
 import com.rentitnow.rent.domain.Rent;
 import com.rentitnow.rent.repository.RentRepository;
+import com.rentitnow.transaction.domain.Transaction;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class RentService {
 
     private final RentRepository rentRepository;
 
-    public void rentMovie(final Cart cart) {
+    public void rentMovie(final Cart cart, final Transaction transaction) {
         for (Movie movie: cart.getMovies()) {
             rentRepository.save(Rent.builder()
                     .movie(movie)
@@ -25,6 +26,7 @@ public class RentService {
                     .rentDate(LocalDate.now())
                     .returnDate(LocalDate.now().plusDays(14))
                     .user(cart.getUser())
+                    .transaction(transaction)
                     .build());
         }
     }
