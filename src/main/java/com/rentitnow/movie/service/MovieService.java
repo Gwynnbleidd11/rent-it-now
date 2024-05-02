@@ -1,6 +1,5 @@
 package com.rentitnow.movie.service;
 
-import com.rentitnow.movie.controller.MovieNotFountException;
 import com.rentitnow.movie.domain.Movie;
 import com.rentitnow.movie.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +17,7 @@ public class MovieService {
         return movieRepository.save(movie);
     }
 
-    public Movie getMovie(final Long movieId) throws MovieNotFountException {
-        System.out.println(movieId);
+    public Movie getMovie(final Long movieId) {
         return movieRepository.findByMovieId(movieId);
     }
 

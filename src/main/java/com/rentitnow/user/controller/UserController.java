@@ -1,6 +1,5 @@
 package com.rentitnow.user.controller;
 
-import com.rentitnow.cart.controller.CartNotFountException;
 import com.rentitnow.cart.domain.Cart;
 import com.rentitnow.cart.mapper.CartMapper;
 import com.rentitnow.cart.service.CartService;
@@ -31,7 +30,7 @@ public class UserController {
     public ResponseEntity<Void> createUser(@RequestBody UserDto userDto) throws UserNotFoundException {
         User user = userMapper.mapToUser(userDto);
         user.setCreationDate(LocalDate.now());
-        userService.createUser(user);
+        userService.saveUser(user);
         Cart cart = cartMapper.mapToNewCart(user.getUserId());
         cartService.saveCart(cart);
         return ResponseEntity.ok().build();
@@ -39,23 +38,24 @@ public class UserController {
 
     @GetMapping(value = "{userId}")
     public ResponseEntity<UserDto> getUser(@PathVariable Long userId) throws UserNotFoundException {
-        return ResponseEntity.ok(userMapper.mapToUserDTO(userService.getUser(userId)));
+        return ResponseEntity.ok(userMapper.mapToUserDto(userService.getUser(userId)));
     }
 
     @GetMapping
     public ResponseEntity<List<UserDto>> getUsers() {
         List<User> customersList = userService.getAllUsers();
-        return ResponseEntity.ok(userMapper.mapToUserDTOList(customersList));
+        return ResponseEntity.ok(userMapper.mapToUserDtoList(customersList));
     }
 
     @PutMapping
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto) {
         User user = userMapper.mapToUser(userDto);
-        User savedUser = userService.createUser(user);
-        return ResponseEntity.ok(userMapper.mapToUserDTO(savedUser));
+        User savedUser = userService.saveUser(user);
+        return ResponseEntity.ok(userMapper.mapToUserDto(savedUser));
     }
 
     @DeleteMapping(value = "{userId}")
+    // TO IMPLEMENT CART DELETION ALONG WITH USER
     public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
         return ResponseEntity.noContent().build();

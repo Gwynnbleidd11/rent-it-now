@@ -18,7 +18,7 @@ public class RentService {
 
     private final RentRepository rentRepository;
 
-    public void rentMovie(final Cart cart, final Transaction transaction) {
+    public void saveRent(final Cart cart, final Transaction transaction) {
         for (Movie movie: cart.getMovies()) {
             rentRepository.save(Rent.builder()
                     .movie(movie)
@@ -31,20 +31,18 @@ public class RentService {
         }
     }
 
-    public Rent getRent(final Long rentID) throws RentNotFoundException {
-        return rentRepository.findById(rentID).orElseThrow(RentNotFoundException::new);
+    public Rent getRent(final Long rentId) throws RentNotFoundException {
+        return rentRepository.findById(rentId).orElseThrow(RentNotFoundException::new);
     }
 
     public List<Rent> getAllRents() {
         return rentRepository.findAll();
     }
 
-
-    public List<Rent> getAllUserRents(final Long userId) {
+    public List<Rent> getUserRents(final Long userId) {
         List<Rent> userRents = rentRepository.findAll();
-        userRents.stream()
+        return userRents.stream()
                 .filter(u -> u.getUser().getUserId().equals(userId))
                 .toList();
-        return userRents;
     }
 }

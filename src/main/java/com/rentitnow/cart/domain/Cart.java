@@ -31,8 +31,4 @@ public class Cart {
     private Transaction transaction;
     @ManyToMany(mappedBy = "carts", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<Movie> movies = new ArrayList<>();
-
-    public void removeMovieFromCart(Movie movie) {
-        movies.remove(movie);
-    }
 }

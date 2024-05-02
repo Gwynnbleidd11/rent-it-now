@@ -10,7 +10,7 @@ import java.util.List;
 public class MovieMapper {
 
     public Movie mapToMovie(final MovieDto movieDto) {
-        return Movie.builder()
+        return new Movie.MovieBuilder()
                 .movieId(movieDto.movieId())
                 .title(movieDto.title())
                 .director(movieDto.director())

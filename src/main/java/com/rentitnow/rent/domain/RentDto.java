@@ -1,10 +1,13 @@
 package com.rentitnow.rent.domain;
 
+import lombok.Builder;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Builder
 public record RentDto(
-        Long id,
+        Long rentId,
         Long movieId,
         BigDecimal cost,
         LocalDate rentDate,

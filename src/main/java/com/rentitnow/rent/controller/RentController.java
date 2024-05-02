@@ -25,12 +25,15 @@ public class RentController {
         return ResponseEntity.ok(rentMapper.mapToRentDtoList(rentsList));
     }
 
-    @GetMapping(value = "/{userId}")
-    public ResponseEntity<List<RentDto>> userRents(@PathVariable Long userId) {
-        List<Rent> rentsList = rentService.getAllUserRents(userId);
-        return ResponseEntity.ok(rentMapper.mapToRentDtoList(rentsList));
+    @GetMapping("/rent/{rentId}")
+    public ResponseEntity<RentDto> getRent(@PathVariable Long rentId) throws RentNotFoundException {
+        Rent rent = rentService.getRent(rentId);
+        return ResponseEntity.ok(rentMapper.mapToRentDto(rent));
     }
 
-
-
+    @GetMapping(value = "/user/{userId}")
+    public ResponseEntity<List<RentDto>> userRents(@PathVariable Long userId) {
+        List<Rent> rentsList = rentService.getUserRents(userId);
+        return ResponseEntity.ok(rentMapper.mapToRentDtoList(rentsList));
+    }
 }

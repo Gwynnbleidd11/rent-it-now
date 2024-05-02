@@ -1,9 +1,7 @@
 package com.rentitnow.movie.domain;
 
 import com.rentitnow.cart.domain.Cart;
-import com.rentitnow.rent.domain.Rent;
 import com.sun.istack.NotNull;
-import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -11,11 +9,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity(name = "movies")
 public class Movie {
 
@@ -41,4 +34,107 @@ public class Movie {
             inverseJoinColumns = @JoinColumn(name = "cart_id", referencedColumnName = "cartId")
     )
     private List<Cart> carts = new ArrayList<>();
+
+    public static class MovieBuilder {
+        private Long movieId;
+        private String imdbMovieId;
+        private String title;
+        private String director;
+        private String cast;
+        private LocalDate publicationDate;
+        private BigDecimal price;
+        private List<Cart> carts = new ArrayList<>();
+
+        public MovieBuilder movieId(Long movieId) {
+            this.movieId = movieId;
+            return this;
+        }
+
+        public MovieBuilder imdbMovieId(String imdbMovieId) {
+            this.imdbMovieId = imdbMovieId;
+            return this;
+        }
+
+        public MovieBuilder title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public MovieBuilder director(String director) {
+            this.director = director;
+            return this;
+        }
+
+        public MovieBuilder cast(String cast) {
+            this.cast = cast;
+            return this;
+        }
+
+        public MovieBuilder publicationDate(LocalDate publicationDate) {
+            this.publicationDate = publicationDate;
+            return this;
+        }
+
+        public MovieBuilder price(BigDecimal price) {
+            this.price = price;
+            return this;
+        }
+
+        public MovieBuilder carts(Cart cart) {
+            carts.add(cart);
+            return this;
+        }
+
+        public Movie build() {
+            return new Movie(movieId, imdbMovieId, title, director, cast,
+                    publicationDate, price, carts);
+        }
+    }
+
+    public Movie(Long movieId, String imdbMovieId, String title, String director, String cast,
+                 LocalDate publicationDate, BigDecimal price, List<Cart> carts) {
+        this.movieId = movieId;
+        this.imdbMovieId = imdbMovieId;
+        this.title = title;
+        this.director = director;
+        this.cast = cast;
+        this.publicationDate = publicationDate;
+        this.price = price;
+        this.carts = new ArrayList<>(carts);
+    }
+
+    public Movie() {
+    }
+
+    public Long getMovieId() {
+        return movieId;
+    }
+
+    public String getImdbMovieId() {
+        return imdbMovieId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDirector() {
+        return director;
+    }
+
+    public String getCast() {
+        return cast;
+    }
+
+    public LocalDate getPublicationDate() {
+        return publicationDate;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public List<Cart> getCarts() {
+        return carts;
+    }
 }

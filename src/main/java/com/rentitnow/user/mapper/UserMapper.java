@@ -24,15 +24,15 @@ public class UserMapper {
                 .build();
     }
 
-    public UserDto mapToUserDTO(final User user) {
+    public UserDto mapToUserDto(final User user) {
         return new UserDto(user.getUserId(), user.getEmail(), user.getPassword(),
                 user.getFirstname(), user.getLastname(), user.getPhoneNumber(),
                 user.getBirthDate(), user.getCreationDate());
     }
 
-    public List<UserDto> mapToUserDTOList(final List<User> customersList) {
+    public List<UserDto> mapToUserDtoList(final List<User> customersList) {
         return customersList.stream()
-                .map(this:: mapToUserDTO)
+                .map(this::mapToUserDto)
                 .toList();
     }
 }

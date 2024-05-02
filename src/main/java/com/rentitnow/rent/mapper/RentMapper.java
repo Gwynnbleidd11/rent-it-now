@@ -24,22 +24,22 @@ public class RentMapper {
     private final MovieService movieService;
     private final TransactionService transactionService;
 
-    public Rent mapToRent(final RentDto rentDTO) throws UserNotFoundException, MovieNotFountException, TransactionNotFountException {
-        User user = userService.getUser(rentDTO.userId());
-        Movie movie = movieService.getMovie(rentDTO.movieId());
-        Transaction transaction = transactionService.getTransaction(rentDTO.transactionId());
+    public Rent mapToRent(final RentDto rentDto) throws UserNotFoundException, MovieNotFountException, TransactionNotFountException {
+        User user = userService.getUser(rentDto.userId());
+        Movie movie = movieService.getMovie(rentDto.movieId());
+        Transaction transaction = transactionService.getTransaction(rentDto.transactionId());
         return Rent.builder()
-                .rentId(rentDTO.id())
+                .rentId(rentDto.rentId())
                 .movie(movie)
-                .cost(rentDTO.cost())
-                .rentDate(rentDTO.rentDate())
-                .returnDate(rentDTO.returnDate())
+                .cost(rentDto.cost())
+                .rentDate(rentDto.rentDate())
+                .returnDate(rentDto.returnDate())
                 .user(user)
                 .transaction(transaction)
                 .build();
     }
 
-    public RentDto mapToRentDTO(final Rent rent) {
+    public RentDto mapToRentDto(final Rent rent) {
         return new RentDto(rent.getRentId(), rent.getMovie().getMovieId(), rent.getCost(),
                 rent.getRentDate(), rent.getReturnDate(), rent.getUser().getUserId(),
                 rent.getTransaction().getTransactionId());
@@ -47,7 +47,7 @@ public class RentMapper {
 
     public List<RentDto> mapToRentDtoList(final List<Rent> rentsList) {
         return rentsList.stream()
-                .map(this::mapToRentDTO)
+                .map(this::mapToRentDto)
                 .toList();
     }
 }

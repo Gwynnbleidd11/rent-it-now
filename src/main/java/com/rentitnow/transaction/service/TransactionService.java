@@ -1,7 +1,6 @@
 package com.rentitnow.transaction.service;
 
 import com.rentitnow.cart.domain.Cart;
-import com.rentitnow.cart.service.CartService;
 import com.rentitnow.movie.domain.Movie;
 import com.rentitnow.transaction.controller.TransactionNotFountException;
 import com.rentitnow.transaction.domain.Transaction;
@@ -31,10 +30,9 @@ public class TransactionService {
 
     public List<Transaction> getUserTransactions(final Long userId) {
         List<Transaction> transactionsList = transactionRepository.findAll();
-        transactionsList.stream()
+        return transactionsList.stream()
                 .filter(u -> u.getUser().getUserId().equals(userId))
                 .toList();
-        return transactionsList;
     }
 
     public List<Transaction> getAllTransactions() {
@@ -51,7 +49,6 @@ public class TransactionService {
             sum = sum.add(movie.getPrice());
         }
         transaction.setTransactionValue(sum);
-        cart.setTransaction(null);
         saveTransaction(transaction);
         return transaction;
     }

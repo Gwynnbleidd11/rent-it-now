@@ -1,13 +1,8 @@
 package com.rentitnow.cart.mapper;
 
-import com.rentitnow.cart.controller.CartNotFountException;
 import com.rentitnow.cart.domain.Cart;
 import com.rentitnow.cart.domain.CartDto;
-import com.rentitnow.cart.service.CartService;
 import com.rentitnow.movie.domain.Movie;
-import com.rentitnow.transaction.controller.TransactionNotFountException;
-import com.rentitnow.transaction.domain.Transaction;
-import com.rentitnow.transaction.service.TransactionService;
 import com.rentitnow.user.controller.UserNotFoundException;
 import com.rentitnow.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,19 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CartMapper {
 
-    private final CartService cartService;
     private final UserService userService;
-    private final TransactionService transactionService;
-
-    public Cart mapToCart(final CartDto cartDto) throws CartNotFountException, UserNotFoundException, TransactionNotFountException {
-        Transaction transaction = transactionService.getTransaction(cartDto.transactionId());
-        return Cart.builder()
-                .cartId(cartDto.cartId())
-                .user(userService.getUser(cartDto.userId()))
-                .transaction(transaction)
-                .movies(cartService.getMoviesFromCart(cartDto.cartId()))
-                .build();
-    }
 
     public CartDto mapToCartDto(final Cart cart) {
         return CartDto.builder()

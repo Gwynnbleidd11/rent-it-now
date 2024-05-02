@@ -1,6 +1,6 @@
 package com.rentitnow.cart.domain;
 
-import lombok.Builder;
+import lombok.*;
 
 import java.util.List;
 

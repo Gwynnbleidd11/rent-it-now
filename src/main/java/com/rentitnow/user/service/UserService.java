@@ -6,7 +6,6 @@ import com.rentitnow.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -15,7 +14,7 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public User createUser(final User user) {
+    public User saveUser(final User user) {
         return userRepository.save(user);
     }
 
