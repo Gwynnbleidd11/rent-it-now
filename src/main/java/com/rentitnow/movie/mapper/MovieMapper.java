@@ -18,6 +18,7 @@ public class MovieMapper {
                 .publicationDate(movieDto.publicationDate())
                 .price(movieDto.price())
                 .imdbMovieId(movieDto.imdbMovieId())
+                .topLevel(movieDto.topLevel())
                 .build();
     }
 
@@ -30,6 +31,7 @@ public class MovieMapper {
                 .publicationDate(movie.getPublicationDate())
                 .price(movie.getPrice())
                 .imdbMovieId(movie.getImdbMovieId())
+                .topLevel(movie.getTopLevel())
                 .build();
     }
 

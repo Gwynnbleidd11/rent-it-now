@@ -13,6 +13,7 @@ public record MovieDto(
         String director,
         String cast,
         LocalDate publicationDate,
+        String topLevel,
         BigDecimal price
 ) {
 }

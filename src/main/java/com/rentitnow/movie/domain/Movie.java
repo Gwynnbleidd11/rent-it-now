@@ -27,6 +27,7 @@ public class Movie {
     private LocalDate publicationDate;
     @NotNull
     private BigDecimal price;
+    private String topLevel;
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.DETACH})
     @JoinTable(
             name = "join_movie_cart",
@@ -43,6 +44,7 @@ public class Movie {
         private String cast;
         private LocalDate publicationDate;
         private BigDecimal price;
+        private String topLevel;
         private List<Cart> carts = new ArrayList<>();
 
         public MovieBuilder movieId(Long movieId) {
@@ -80,6 +82,11 @@ public class Movie {
             return this;
         }
 
+        public MovieBuilder topLevel(String topLevel) {
+            this.topLevel = topLevel;
+            return this;
+        }
+
         public MovieBuilder carts(Cart cart) {
             carts.add(cart);
             return this;
@@ -87,12 +94,12 @@ public class Movie {
 
         public Movie build() {
             return new Movie(movieId, imdbMovieId, title, director, cast,
-                    publicationDate, price, carts);
+                    publicationDate, price, topLevel, carts);
         }
     }
 
     public Movie(Long movieId, String imdbMovieId, String title, String director, String cast,
-                 LocalDate publicationDate, BigDecimal price, List<Cart> carts) {
+                 LocalDate publicationDate, BigDecimal price, String topLevel, List<Cart> carts) {
         this.movieId = movieId;
         this.imdbMovieId = imdbMovieId;
         this.title = title;
@@ -100,6 +107,7 @@ public class Movie {
         this.cast = cast;
         this.publicationDate = publicationDate;
         this.price = price;
+        this.topLevel = topLevel;
         this.carts = new ArrayList<>(carts);
     }
 
@@ -132,6 +140,10 @@ public class Movie {
 
     public BigDecimal getPrice() {
         return price;
+    }
+
+    public String getTopLevel() {
+        return topLevel;
     }
 
     public List<Cart> getCarts() {

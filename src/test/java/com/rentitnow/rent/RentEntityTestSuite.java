@@ -1,9 +1,10 @@
-package com.rentitnow.rent.controller;
+package com.rentitnow.rent;
 
 import com.rentitnow.cart.domain.Cart;
 import com.rentitnow.cart.service.CartService;
 import com.rentitnow.movie.domain.Movie;
 import com.rentitnow.movie.service.MovieService;
+import com.rentitnow.rent.controller.RentNotFoundException;
 import com.rentitnow.rent.domain.Rent;
 import com.rentitnow.rent.service.RentService;
 import com.rentitnow.transaction.domain.Transaction;
