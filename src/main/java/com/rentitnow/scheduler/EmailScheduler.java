@@ -35,7 +35,8 @@ public class EmailScheduler {
                 Mail.builder()
                         .mailTo(adminConfig.getAdminMail())
                         .subject(SUBJECT)
-                        .message(rentsCount + " has been rented yesterday, for the total amount of: " + sum)
+                        .message(rentsCount + " has been rented for the past 24 hours, " +
+                                "for the total amount of: " + sum)
                         .build()
         );
     }
