@@ -11,16 +11,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserMapper {
 
-    public User mapToUser(final UserDto userDTO) {
+    public User mapToUser(final UserDto userDto) {
         return User.builder()
-                .userId(userDTO.userId())
-                .email(userDTO.email())
-                .password(userDTO.password())
-                .firstname(userDTO.firstname())
-                .lastname(userDTO.lastname())
-                .birthDate(userDTO.birthDate())
-                .creationDate(userDTO.creationDate())
-                .phoneNumber(userDTO.phoneNumber())
+                .userId(userDto.userId())
+                .email(userDto.email())
+                .password(userDto.password())
+                .firstname(userDto.firstname())
+                .lastname(userDto.lastname())
+                .birthDate(userDto.birthDate())
+                .phoneNumber(userDto.phoneNumber())
+                .creationDate(userDto.creationDate())
                 .build();
     }
 

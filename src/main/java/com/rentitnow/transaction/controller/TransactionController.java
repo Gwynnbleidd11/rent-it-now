@@ -24,14 +24,6 @@ public class TransactionController {
     private final TransactionMapper transactionMapper;
     private final TransactionFacade transactionFacade;
 
-    //To delete i guess, transaction is being crerated out of cart
-//    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<Void> createTransaction(@RequestBody TransactionDto transactionDto) throws UserNotFoundException {
-//        Transaction transaction = transactionMapper.mapToTransaction(transactionDto);
-//        transactionService.saveTransaction(transaction);
-//        return ResponseEntity.ok().build();
-//    }
-
     @GetMapping(value = "/{transactionId}")
     public ResponseEntity<TransactionDto> getTransaction(@PathVariable Long transactionId) throws TransactionNotFountException {
         Transaction transaction = transactionService.getTransaction(transactionId);

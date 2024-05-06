@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 public class TransactionFacade {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionFacade.class);
-
     private final CartService cartService;
     private final RentService rentService;
     private final TransactionService transactionService;

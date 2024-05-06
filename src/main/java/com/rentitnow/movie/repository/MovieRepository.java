@@ -18,6 +18,4 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
     Movie findByMovieId(Long movieId);
 
     Optional<Movie> findById(Long movieId);
-
-
 }

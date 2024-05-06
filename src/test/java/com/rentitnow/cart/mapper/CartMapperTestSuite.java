@@ -2,7 +2,6 @@ package com.rentitnow.cart.mapper;
 
 import com.rentitnow.cart.domain.Cart;
 import com.rentitnow.cart.domain.CartDto;
-import com.rentitnow.cart.service.CartService;
 import com.rentitnow.movie.domain.Movie;
 import com.rentitnow.transaction.domain.Transaction;
 import com.rentitnow.transaction.domain.TransactionType;
@@ -15,7 +14,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

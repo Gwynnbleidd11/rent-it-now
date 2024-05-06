@@ -1,6 +1,5 @@
 package com.rentitnow.transaction.domain;
 
-import com.rentitnow.cart.domain.Cart;
 import com.rentitnow.user.domain.User;
 import com.sun.istack.NotNull;
 import lombok.*;
@@ -31,5 +30,4 @@ public class Transaction {
     private boolean isTransactionPayed;
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
-
 }

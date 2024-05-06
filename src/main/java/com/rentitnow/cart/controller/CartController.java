@@ -11,7 +11,6 @@ import com.rentitnow.movie.domain.MovieDto;
 import com.rentitnow.movie.mapper.MovieMapper;
 import com.rentitnow.user.controller.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,14 +25,6 @@ public class CartController {
     private final CartMapper cartMapper;
     private final MovieMapper movieMapper;
     private final CartFacade cartFacade;
-
-    // Not needed if cart is being created along with user creation, leaving it for now, but will probably delete
-//    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<Void> createCart(@RequestBody CartDto cartDto) throws UserNotFoundException {
-//        Cart cart = cartMapper.mapToNewCart(cartDto.userId());
-//        cartService.saveCart(cart);
-//        return ResponseEntity.ok().build();
-//    }
 
     @GetMapping("/{cartId}")
     public ResponseEntity<CartDto> getCart(@PathVariable Long cartId) throws CartNotFountException {

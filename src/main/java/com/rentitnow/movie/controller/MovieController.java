@@ -28,7 +28,7 @@ public class MovieController {
     }
 
     @GetMapping("/{movieId}")
-    public ResponseEntity<MovieDto> getMovie(@PathVariable Long movieId) throws MovieNotFountException {
+    public ResponseEntity<MovieDto> getMovie(@PathVariable Long movieId) {
         return ResponseEntity.ok(movieMapper.mapToMovieDto(movieService.getMovie(movieId)));
     }
 
